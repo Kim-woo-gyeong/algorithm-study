@@ -8,7 +8,7 @@ import java.util.List;
 public class BigNumMake_DFS {
 
 	public static void main(String[] args) {
-		String number = "1231234";
+		String number = "1231234"; //
 		int k = 3;
 		makeBigNum(number,k);
 	}
