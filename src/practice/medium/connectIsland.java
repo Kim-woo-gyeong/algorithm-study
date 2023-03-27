@@ -1,5 +1,8 @@
 package practice.medium;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class connectIsland {
 /*
  * 문제 설명 섬 연동하기
@@ -37,48 +40,59 @@ costs를 그림으로 표현하면 다음과 같으며, 이때 초록색 경로�
 //		int[][] costs = {{0, 1, 5},{1, 2, 3},{2, 3, 3},{1, 3, 2},{0, 3, 4}};
 		// 9
 
-		int n = 7;
-		int[][] costs = {{2, 3, 7},{3, 6, 13},{3, 5, 23},{5, 6, 25},{0, 1, 29},{1, 5, 34},{1, 2, 35},{4, 5, 53},{0, 4, 75}};
+//		int n = 5;
+//		int[][] costs = {{0, 1, 5},{1, 2, 3},{2, 3, 3},{3,1,2},{3,0,4},{2,4,6},{4,0,7}};
+		// 15
+
+//		int n = 7;
+//		int[][] costs = {{2, 3, 7},{3, 6, 13},{3, 5, 23},{5, 6, 25},{0, 1, 29},{1, 5, 34},{1, 2, 35},{4, 5, 53},{0, 4, 75}};
 		// 159
-		solution(n,costs);
+
+		int n = 5;
+		int[][] costs =  {{0,1,1},{0,4,5},{2,4,1},{2,3,1},{3,4,1}};
+		// 8;
+
+		System.out.println(solution(n,costs));
 
 	}
 
     public static int solution(int n, int[][] costs) {
         int answer = 0;
         int row = costs.length;
-        boolean[] visited = new boolean[100];
+        int[] parent = new int[10000];
+
+        for(int i = 0; i < 10000; i++) {
+        	parent[i] = i;
+        }
 
         int limit = ((n-1) * n) / 2;
-        int count = 0;
+/*********** 정렬을 아래 방식으로 했더니, 모든 테스트 케이스를 틀려버림....
         int min = 0;
         int position = 0;
-
-//        println(costs);
-        while(position < row) {	// 정렬
-        	min = costs[position][2];
-        	for(int i = position; i < row; i++) {
-        		if(min > costs[i][2]) {
-            		change(position, i, costs);
-            	}
-        	}
-        	position++;
-//        	println(costs);
-        }
+//	    while(position < row) {	// 정렬
+//	    	min = costs[position][2];
+//	    	for(int i = position; i < row; i++) {
+//	    		if(min > costs[i][2]) {
+//	        		change(position, i, costs);
+//	        	}
+//	    	}
+//	    	position++;
+//	    }
+*******************************************************************/
+        Arrays.sort(costs,(o1,o2) -> {
+        	return o1[2] - o2[2];
+        });
         println(costs);
         for(int i = 0; i < row; i++) {
-
-        	if(!(visited[costs[i][0]] && visited[costs[i][1]])) {
+        	if(i > limit) break;
+        	if(findParent(parent, costs[i][0], costs[i][1]) == 1) {
+        		System.out.println(costs[i][0] + " 과/와"+costs[i][1] +" 는/은 연결되어있음.");
+        	} else {
+        		System.out.println(costs[i][0] + " 과/와"+costs[i][1] +" 는/은 연결안됨.");
         		answer += costs[i][2];
-        		count++;
         	}
-        	visited[costs[i][0]] = true;
-        	visited[costs[i][1]] = true;
-        	if(count > limit) {
-        		break;
-        	}
+        	unionParent(parent, costs[i][0], costs[i][1]);
         }
-        System.out.println(answer);
         return answer;
     }
 
@@ -91,6 +105,27 @@ costs를 그림으로 표현하면 다음과 같으며, 이때 초록색 경로�
     		costs[preRow][i] = temp;
     	}
 
+    }
+
+    public static int getParent(int[] parent, int x) {
+    	if(parent[x] == x) return x;
+    	return parent[x] = getParent(parent, parent[x]);
+    }
+
+    public static void unionParent(int[] parent, int a, int b) {
+    	a = getParent(parent,a);
+    	b = getParent(parent,b);
+
+    	if(a < b) parent[b] = a;	// b의 부모는 a
+    	else parent[a] = b;
+    }
+
+    public static int findParent(int[] parent, int a, int b) {
+    	a = getParent(parent, a);
+    	b = getParent(parent, b);
+
+    	if(a == b) return 1;
+    	else return 0;
     }
 
     public static void println(int[][] costs) {
