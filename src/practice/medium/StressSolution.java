@@ -52,15 +52,15 @@ public class StressSolution {
 		int idx = 0;
 		for(int[] d : dungeons) {
 			int a = d[0]; int b = d[1];
+			System.out.println("idx : " + idx + " dungeons : " +d[0] + " k = " + k);
 			if(a <= k) {
-				System.out.println("idx : " + idx + " dungeons : " +d[0]);
 				d[0] = 9999;
 				cnt = Math.max(1 + dfs(k - b, dungeons), cnt);
 				d[0] = a;
 			}
 			idx++;
 		}
-
+		System.err.println("idx : " + idx + " cnt : " + cnt);
 		return cnt;
 	}
 

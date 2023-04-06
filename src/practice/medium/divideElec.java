@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class divideElec {
 /*
  * 문제 설명
@@ -45,7 +46,6 @@ ex3.png
 3번과 7번을 연결하는 전선을 끊으면 두 전력망이 각각 4개와 3개의 송전탑을 가지게 되며, 이 방법이 최선입니다.
  * */
 
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		int n = 9;
@@ -60,35 +60,61 @@ ex3.png
 	}
 
 	public static void solutions(int n, int[][] wires) {
-		int a1 = 0;
-		int min = 9999;
-		for(int[] item : wires) {
-			a1 = getParent(wires, item[0], n);
-			System.out.println(item[0] + " 갯수 : " + a1);
-			if(a1 < min) {
-				min = a1;
-			}
-		}
-		int a2 = n - a1;
 
-		System.out.println(Math.abs(a1 - a2));
+        ArrayList<Integer>[] list = new ArrayList[n+1];
+
+        for(int i=1; i<=n; i++) {
+            list[i] = new ArrayList<>();
+        }
+        for(int i=0; i<wires.length; i++) {
+            int v1 = wires[i][0];
+            int v2 = wires[i][1];
+            list[v1].add(v2);
+            list[v2].add(v1);
+        }
+
+
+        int min = 9999;
+		for(int[] item : wires) {
+			boolean[] visited = new boolean[n+1];
+			visited[1] = true;
+			getParent(list,visited, 1, item[0], item[1]);
+//			println(list, visited);
+			int cnt = 0;
+			for(boolean visit : visited) {
+				if(visit) cnt++;
+			}
+
+			min = Math.min(min, Math.abs((n - cnt) - cnt));
+		}
+		System.out.println(min);
+
 	}
-
-	public static int getParent(int[][] wires, int a, int n) {
-		int count = 1;
-		int b = -1;
-		if(a == n) {
-			return count;
+	public static void dfs2(int[][] wires, int n) {
+		for(int i = 1; i <= wires.length; i++) {
+			System.out.println(wires[i][0] + " , " + wires[i][1] + " ");
 		}
-		for(int[] item : wires) {
-			if(item[0] == a) {
-				b = item[1];
-			}else if(item[1] == a) {
-				b = item[0];
+	}
+	public static void println(ArrayList<Integer>[] list, boolean[] visited) {
+		for(int i = 1; i < list.length; i++) {
+			System.out.print(list[i] + " ");
+		}
+		System.out.println();
+		System.out.println();
+
+		for(int i = 1; i < visited.length; i++) {
+			System.out.print(visited[i] + " ");
+		}
+		System.out.println();
+	}
+	public static void getParent(ArrayList<Integer>[] list,boolean[] visited, int start, int a, int b) {
+		// 1 == a
+		for(int num : list[start]) {
+			if(((start == a && num == b) || (start == b && num == a))) continue;
+			if(!visited[num]) {
+				visited[num] = true;
+				getParent(list, visited, num, a, b);
 			}
-			count+=getParent(wires, b, n);
 		}
-
-		return count;
 	}
 }
