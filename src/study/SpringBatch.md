@@ -1,7 +1,7 @@
 ### Spring Boot Batch 환경 구성
 
 [db 연동](#db-연동)
-[jpa 연동](#jpa-연동)
+[JPA 연동](#jpa-연동)
 [Batch Job 개발](#batch-job-개발)
 
 
@@ -78,7 +78,7 @@ private Runnable getRunnable(String params) {
 
 ## DB 연동
 
->> JPA 연동
+## JPA 연동
 
 >> Batch Job 개발
 ## 개발을 하고 싶어요
