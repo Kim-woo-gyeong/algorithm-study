@@ -25,7 +25,11 @@
 > NEVER: 스크립트를 항상 실행하지 않습니다. 운영에서 수동으로 스크립트 생성 후 설정하는 것을 권장합니다. 내장 DB일 경우 스크립트가 생성이 안되기 때문에 오류가 발생합니다.
 > ```
 > 티베로 인 경우에는 spring batch 에서 지원되지 않는 dataType 이기 때문에 티베로와 비슷한 Oracle DB 로 설정 해야한다.<br>
+> 그 부분이 JobRepository 설정 부분
 > Spring Batch에서 지원되는 데이터베이스 타입 : DERBY, DB2, DB2ZOS, HSQL, SQLSERVER, MYSQL, ORACLE, POSTGRES, SYBASE, H2
+
+[비표준 데이터베이스 설정한 코드 보러가기](#jobRepository-설정)
+
 > ```bash
 > -- 비표준 데이터베이스 유형에 대해 참고 링크
 > https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:brte:batch_core:job_repository
