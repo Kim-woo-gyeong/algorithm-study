@@ -28,7 +28,7 @@
 > 그 부분이 JobRepository 설정 부분
 > Spring Batch에서 지원되는 데이터베이스 타입 : DERBY, DB2, DB2ZOS, HSQL, SQLSERVER, MYSQL, ORACLE, POSTGRES, SYBASE, H2
 
-[비표준 데이터베이스 설정한 코드 보러가기](#jobRepository-설정)
+[비표준 데이터베이스 설정한 코드 보러가기](#-jobRepository-설정)
 
 > ```bash
 > -- 비표준 데이터베이스 유형에 대해 참고 링크
